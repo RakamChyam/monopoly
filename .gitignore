@@ -1,0 +1,8 @@
+# IDE
+.idea/
+.vscode/
+
+# Node.js (если используешь)
+node_modules/
+package-lock.json
+yarn.lock
