@@ -1,0 +1,472 @@
+export interface BaseField {
+    name: string;
+    type: string;
+    position: number;
+    isRentField: boolean;
+    canBuy: boolean;
+}
+
+export interface PropertyField extends BaseField {
+    price: number;
+    color: string;
+    houseCost: number;
+    houses: number;
+    rent: number[];
+    collateral: boolean;
+    owner: string;
+}
+
+export interface TreasuryField extends BaseField {
+    type: "treasury";
+}
+
+export interface ChanceField extends BaseField {
+    type: "chance";
+}
+
+export interface TaxField extends BaseField {
+    type: "tax";
+    value: number;
+}
+
+export interface RailwayField extends BaseField {
+    type: "railway";
+    price: number;
+    rent: number[];
+    color: string;
+    houseCost: 0;
+    houses: 0;
+    collateral: boolean;
+    owner: string;
+}
+
+export interface CommunalField extends BaseField {
+    type: "communal";
+    price: number;
+    rent: number[];
+    color: string;
+    houseCost: 0;
+    houses: 0;
+    collateral: boolean;
+    owner: string;
+}
+
+export type GameField = TreasuryField | ChanceField | TaxField;
+
+export type OwnerField = RailwayField | CommunalField | PropertyField;
+
+export type Field = BaseField | OwnerField | GameField;
+
+
+export const fields: Field[] = [
+    {
+        name: "Поле Вперед",
+        type: "save_zone",
+        position: 0,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Житная ул.",
+        type: "rent_field_1",
+        color: "brown",
+        position: 1,
+        price: 60,
+        houseCost: 50,
+        rent: [2, 10, 30, 90, 160, 250],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Общественная казна",
+        type: "treasury",
+        position: 2,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Нагатинская ул.",
+        type: "rent_field_1",
+        color: "brown",
+        position: 3,
+        price: 60,
+        houseCost: 50,
+        rent: [4, 20, 60, 180, 320, 450],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Подоходный налог",
+        type: "tax",
+        value: 200,
+        position: 4,
+        isRentField: true,
+        canBuy: false,
+    },
+    {
+        name: "Рижская железная дорога",
+        type: "railway",
+        position: 5,
+        price: 200,
+        isRentField: true,
+        canBuy: true,
+        rent: [25, 50, 100, 200],
+        color: "#888",
+    },
+    {
+        name: "Варшавское шоссе",
+        type: "rent_field_2",
+        color: "lightblue",
+        position: 6,
+        price: 100,
+        houseCost: 50,
+        rent: [6, 30, 90, 270, 400, 550],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Шанс",
+        type: "chance",
+        position: 7,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Огарева",
+        type: "rent_field_2",
+        color: "lightblue",
+        position: 8,
+        price: 100,
+        houseCost: 50,
+        rent: [6, 30, 90, 270, 400, 550],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Первая Парковая ул.",
+        type: "rent_field_2",
+        color: "lightblue",
+        position: 9,
+        price: 120,
+        houseCost: 50,
+        rent: [8, 40, 100, 300, 450, 600],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Тюрьма",
+        type: "save_zone",
+        position: 10,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Полянка",
+        type: "rent_field_3",
+        color: "purple",
+        position: 11,
+        price: 140,
+        houseCost: 100,
+        rent: [10, 50, 150, 450, 625, 750],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Электростанция",
+        type: "communal",
+        position: 12,
+        price: 150,
+        isRentField: true,
+        canBuy: true,
+        rent: [4, 10],
+        color: "#888",
+    },
+    {
+        name: "Ул. Сретенка",
+        type: "rent_field_3",
+        color: "purple",
+        position: 13,
+        price: 140,
+        houseCost: 100,
+        rent: [10, 50, 150, 450, 625, 750],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Ростовская наб.",
+        type: "rent_field_3",
+        color: "purple",
+        position: 14,
+        price: 160,
+        houseCost: 100,
+        rent: [12, 60, 180, 500, 700, 900],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Курская железная дорога",
+        type: "railway",
+        position: 15,
+        price: 200,
+        isRentField: true,
+        canBuy: true,
+        rent: [25, 50, 100, 200],
+        color: "#888",
+    },
+    {
+        name: "Рязанский проспект.",
+        type: "rent_field_4",
+        color: "orange",
+        position: 16,
+        price: 180,
+        houseCost: 100,
+        rent: [14, 70, 200, 550, 750, 950],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Общественная казна",
+        type: "treasury",
+        position: 17,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Вавилова",
+        type: "rent_field_4",
+        color: "orange",
+        position: 18,
+        price: 180,
+        houseCost: 100,
+        rent: [14, 70, 200, 550, 750, 950],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Рублевское шоссе",
+        type: "rent_field_4",
+        color: "orange",
+        position: 19,
+        price: 200,
+        houseCost: 100,
+        rent: [16, 80, 220, 600, 800, 1000],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Бесплатная стоянка",
+        type: "save_zone",
+        position: 20,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Тверская",
+        type: "rent_field_5",
+        color: "red",
+        position: 21,
+        price: 220,
+        houseCost: 150,
+        rent: [18, 90, 250, 700, 875, 1050],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Шанс",
+        type: "chance",
+        position: 22,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Пушкинская ул.",
+        type: "rent_field_5",
+        color: "red",
+        position: 23,
+        price: 220,
+        houseCost: 150,
+        rent: [18, 90, 250, 700, 875, 1050],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Площадь Маяковского",
+        type: "rent_field_5",
+        color: "red",
+        position: 24,
+        price: 240,
+        houseCost: 150,
+        rent: [20, 100, 300, 750, 925, 1100],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Казанская железная дорога",
+        type: "railway",
+        position: 25,
+        price: 200,
+        isRentField: true,
+        canBuy: true,
+        rent: [25, 50, 100, 200],
+        color: "#888",
+    },
+    {
+        name: "Ул. Грузинский вал",
+        type: "rent_field_6",
+        color: "yellow",
+        position: 26,
+        price: 260,
+        houseCost: 150,
+        rent: [22, 110, 330, 800, 975, 1150],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Ул. Чайковского",
+        type: "rent_field_6",
+        color: "yellow",
+        position: 27,
+        price: 260,
+        houseCost: 150,
+        rent: [22, 110, 330, 800, 975, 1150],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Водопровод",
+        type: "communal",
+        position: 28,
+        price: 150,
+        isRentField: true,
+        canBuy: true,
+        rent: [4, 10],
+        color: "#888",
+    },
+    {
+        name: "Смоленская площадь",
+        type: "rent_field_6",
+        color: "yellow",
+        position: 29,
+        price: 280,
+        houseCost: 150,
+        rent: [24, 120, 350, 850, 1025, 1200],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Отправляйтесь в тюрьму",
+        type: "prison",
+        position: 30,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Щусева",
+        type: "rent_field_7",
+        color: "green",
+        position: 31,
+        price: 300,
+        houseCost: 200,
+        rent: [26, 130, 390, 900, 1100, 1275],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Гоголевский бульвар",
+        type: "rent_field_7",
+        color: "green",
+        position: 32,
+        price: 300,
+        houseCost: 200,
+        rent: [26, 130, 390, 900, 1100, 1275],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Общественная казна",
+        type: "treasury",
+        position: 33,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Кутузовский проспект",
+        type: "rent_field_7",
+        color: "green",
+        position: 34,
+        price: 320,
+        houseCost: 200,
+        rent: [28, 150, 450, 1000, 1200, 1400],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Ленинградская железная дорога",
+        type: "railway",
+        position: 35,
+        price: 200,
+        isRentField: true,
+        canBuy: true,
+        rent: [25, 50, 100, 200],
+        color: "#888",
+    },
+    {
+        name: "Шанс",
+        type: "chance",
+        position: 36,
+        isRentField: false,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Малая Бронная",
+        type: "rent_field_8",
+        color: "blue",
+        position: 37,
+        price: 350,
+        houseCost: 200,
+        rent: [35, 175, 500, 1100, 1300, 1500],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+    {
+        name: "Налог на роскошь",
+        type: "tax",
+        value: 100,
+        position: 38,
+        isRentField: true,
+        canBuy: false,
+    },
+    {
+        name: "Ул. Арбат",
+        type: "rent_field_8",
+        color: "blue",
+        position: 39,
+        price: 400,
+        houseCost: 200,
+        rent: [50, 200, 600, 1400, 1700, 2000],
+        houses: 0,
+        isRentField: true,
+        canBuy: true,
+    },
+];
