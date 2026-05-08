@@ -1,0 +1,332 @@
+.trade-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 1000px;
+    height: auto;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 30px rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: modalCenterIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10000;
+}
+
+@keyframes modalCenterIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.trade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(240, 240, 240, 0.9)
+    );
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.trade-header h3 {
+    margin: 0;
+    font-size: 2.4rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.trade-content {
+    padding: 30px;
+    overflow-y: auto;
+    max-height: calc(85vh - 80px);
+}
+
+.trade-content h3 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #555;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.trade-players-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Scrollbar styling */
+.trade-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.trade-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.trade-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.trade-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+
+.trade-content-selected {
+    padding: 30px;
+    max-height: calc(85vh - 150px);
+    display: flex;
+    gap: 30px;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Стили для контейнера игрока */
+.trade-player-container {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.trade-player-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Никнейм игрока */
+.trade-player-nickname {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    padding-bottom: 15px;
+    display: inline-block;
+    position: relative;
+}
+
+/* Контейнер с картами */
+.trade-player-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
+    justify-content: center;
+}
+
+.trade-player-balance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trade-player-balance p {
+    font-size: 1.2rem;
+    color: rgb(91, 227, 9);
+    font-weight: 600;
+    background: rgba(91, 227, 9, 0.15);
+    padding: 8px 15px;
+    border-radius: 25px;
+    margin: 0;
+    backdrop-filter: blur(4px);
+}
+
+.trade-player-balance input {
+    flex: 1;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #333;
+    outline: none;
+    min-width: 120px;
+}
+
+.trade-player-balance input:focus {
+    border-color: rgba(91, 227, 9, 0.5);
+    box-shadow: 0 0 0 3px rgba(91, 227, 9, 0.1);
+    background: white;
+}
+
+.trade-player-balance input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 1.2rem;
+}
+
+.trade-window-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.trade-window-buttons button {
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+/* Кнопка подтверждения (зеленая) */
+.trade-window-buttons button:first-child {
+    background: #4CAF50;
+    color: white;
+}
+
+.trade-window-buttons button:first-child:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+.trade-window-buttons button:first-child:active {
+    transform: translateY(0);
+}
+
+/* Обновленные стили для .trade-content-selected */
+.trade-content-selected {
+    padding: 30px;
+    overflow-y: auto;
+    max-height: calc(85vh - 200px);
+    display: flex;
+    gap: 30px;
+}
+
+/* Контейнер игрока занимает равное пространство */
+.trade-content-selected .trade-player-container {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Контейнер с картами */
+.trade-player-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+    min-height: 150px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
+    justify-content: center;
+    flex: 1;
+}
+
+/* Стилизация скроллбара для контейнера с картами */
+.trade-player-cards::-webkit-scrollbar {
+    width: 6px;
+}
+
+.trade-player-cards::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.trade-player-cards::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.trade-window-action-buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.trade-window-action-buttons button {
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+/* Кнопка подтверждения (зеленая) */
+.trade-window-action-buttons button:last-child {
+    background: #4CAF50;
+    color: white;
+}
+
+.trade-window-action-buttons button:last-child:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+.trade-window-action-buttons button:first-child {
+    background-color: #f44336;
+    color: white;
+}
+
+.trade-window-action-buttons button:first-child:hover {
+    background: #d32f2f;
+    transform: translateY(-1px);
+}

@@ -1,5 +1,7 @@
 import Player from "./Player";
-import {Field, fields} from "./Field";
+import {Field, fields, OwnerField} from "./Field";
+import {TradeOffer} from "./TradeOffer";
+import {Auction} from "./Auction";
 
 export default class Game {
     private static _instance: Game | null = null;
@@ -8,11 +10,15 @@ export default class Game {
     private _players: Array<Player> = [];
     private _colors: string[] = ["RED", "GREEN", "BLUE"];
     private _board: Field[] = fields;
-    private active: boolean = false;
-
+    private _ownerFields: OwnerField[];
+    private _active: boolean = false;
+    private _tradeOffers: TradeOffer[] = [];
+    private _auctions: Auction[] = [];
 
     private constructor(countOfPlayers: number) {
+        const indexesToRemove = [0, 2, 4, 7, 10, 17, 20, 22, 30, 33, 36, 38]; //Фильтрация карт при объявлении игры
         this._countOfPlayers = countOfPlayers;
+        this._ownerFields = this.board.filter((_, index) => !indexesToRemove.includes(index)) as OwnerField[];
     }
 
     public static getInstance(countOfPlayers?: number): Game {
@@ -45,7 +51,7 @@ export default class Game {
     }
 
     public hasColor(color: string) {
-        return this.colors.find(color => color === color);
+        return this.colors.find(c => c === color);
     }
 
     public roll() {
@@ -60,13 +66,13 @@ export default class Game {
 
     public start() {
         this.shufflePlayers();
-        this.active = true;
+        this._active = true;
         this.players[0].makingStep = true;
         this.players[0].makeRoll = false;
     }
 
     public getCurrentPlayer(): Player {
-        return this.players[this.step % this.countOfPlayers];
+        return this.players[this.step % this.players.length];
     }
 
     public nextStep() {
@@ -75,6 +81,54 @@ export default class Game {
         this.step++;
         this.getCurrentPlayer().makingStep = true;
         this.getCurrentPlayer().makeRoll = false;
+    }
+
+    public getAvalibleOwnerField(player: Player) {
+        return this.ownerFields.find(p => p.position === player.position);
+    }
+
+    public removeOwnerField(ownerField: OwnerField) {
+        const index = this._ownerFields.indexOf(ownerField);
+        if (index !== -1) {
+            this.ownerFields.splice(index, 1);
+        }
+    }
+
+    public addTradeOffer(tradeOffer: TradeOffer): void {
+        this._tradeOffers.push(tradeOffer);
+    }
+
+    public removeTradeOffer(tradeOffer: TradeOffer): void {
+        const index = this._tradeOffers.indexOf(tradeOffer);
+        if (index !== -1) {
+            this.tradeOffers.splice(index, 1);
+        }
+    }
+
+    public getTradeOfferByPlayer(player: Player) {
+        return this._tradeOffers.find((tradeOffer: TradeOffer) => {
+            return player === tradeOffer.selectedPlayer.player;
+        })
+    }
+
+    public addAuction(auction: Auction): void {
+        this._auctions.push(auction);
+    }
+
+    public removeAuction(auction: Auction): void {
+        this._auctions.splice(this._auctions.indexOf(auction), 1);
+    }
+
+    public getAuction() {
+        return this._auctions[0]
+    }
+
+    get auctions(): Auction[] {
+        return this._auctions;
+    }
+
+    get ownerFields(): OwnerField[] {
+        return this._ownerFields;
     }
 
     get board(): Field[] {
@@ -97,6 +151,10 @@ export default class Game {
         return this._colors;
     }
 
+    get tradeOffers(): TradeOffer[] {
+        return this._tradeOffers;
+    }
+
     set step(value: number) {
         this._step = value;
     }
@@ -109,4 +167,11 @@ export default class Game {
         this._colors = value;
     }
 
+    get active(): boolean {
+        return this._active;
+    }
+
+    set active(value: boolean) {
+        this._active = value;
+    }
 }

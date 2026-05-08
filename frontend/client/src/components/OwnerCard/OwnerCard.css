@@ -1,0 +1,124 @@
+/*Дизайн карточек*/
+
+.owner-card-item {
+    border: 1px black solid;
+    width: 200px;
+    height: 320px;
+}
+
+.owner-card-color {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: space-between; /* Кнопка справа */
+    height: 45px;
+    border: 3px solid black;
+    position: relative;
+    background-color: #888;
+}
+
+.owner-card-info-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 10px; /* Отступ от правого края */
+    transition: all 0.2s ease;
+    box-shadow:
+            0 2px 5px rgba(0, 0, 0, 0.2),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.owner-card-logo {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.owner-card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.owner-card-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.owner-card-houses {
+    font-size: 14px;
+    color: #666;
+}
+
+.owner-card-rent {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: auto;
+}
+
+.owner-card-btns-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Кастомный скроллбар */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.owner-card-info-content {
+    padding: 15px;
+}
+
+.info-section {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.479);
+    padding: 5px 0;
+}
+
+.info-section:last-child {
+    border-bottom: none;
+}
+
+.info-section:first-child {
+    padding: 0 0 5px;
+}
+
+.info-rent-list {
+    font-size: 1.2rem;
+}

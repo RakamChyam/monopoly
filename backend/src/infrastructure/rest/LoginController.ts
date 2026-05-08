@@ -41,11 +41,12 @@ export class LoginController {
                 this.notificationSystem.sendMessageToAll(`Игрок ${newPlayer.nickname} присоединился`)
 
                 const players = PlayerMapper.map(this.game.players)
+                const isStarted = this.startGameUseCase.execute();
+
                 this.io.emit("update-players-data", {
                     players: players,
                 })
 
-                const isStarted = this.startGameUseCase.execute();
                 if (isStarted) {
                     this.notificationSystem.sendMessageToAll(`Игра началась! Первым ходит ${this.game.getCurrentPlayer().nickname}`);
                 }

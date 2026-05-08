@@ -1,0 +1,59 @@
+.trade-player-list-element {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.trade-player-list-element:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.player-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.trade-player-list-element:hover .player-avatar {
+    transform: scale(1.05);
+}
+
+.trade-player-list-element-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trade-player-element-nickname {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.trade-player-element-balance {
+    font-size: 1.2rem;
+    color: rgb(91 227 9);
+    font-weight: 500;
+    background: rgba(91, 227, 9, 0.15);
+    padding: 5px 12px;
+    border-radius: 20px;
+}

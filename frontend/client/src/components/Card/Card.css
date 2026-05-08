@@ -1,0 +1,100 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+    border: 1px black solid;
+}
+
+.card:hover,
+.corner:hover {
+    transform: scale(1.1);
+    transition: 200ms;
+}
+
+.corner {
+    width: 80px;
+    height: 80px;
+}
+
+.card-color {
+    height: 20px;
+    outline: 2px black solid;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    padding: 2px;
+    word-wrap: break-word;
+    /* Добавляем прозрачный фон по умолчанию */
+    background-color: transparent;
+}
+
+.card-price {
+    color: #4caf4f;
+    text-align: center;
+}
+
+.card-players {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    max-height: 36px;
+    /* 3 ряда по 12px */
+    gap: 2px;
+    z-index: 10;
+    padding: 2px;
+}
+
+.player-on-card {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid rgb(0, 0, 0);
+    flex-shrink: 0;
+}
+
+/*Окно*/
+
+.modal-card {
+    border: 3px black solid;
+    color: black;
+    width: 400px;
+    height: 650px;
+}
+
+.modal-card-header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 91px;
+    border: 3px solid black;
+    border-bottom: 6px black solid;
+}
+
+.modal-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.808);
+    font-size: 1.5rem;
+    padding: 30px;
+    height: 490px;
+    overflow: auto;
+}
+
+.modal-card-name {
+    font-size: 3rem;
+    border-bottom: 5px solid black;
+    padding: 0 0 15px;
+    margin: 0 0 15px;
+}
+
+.modal-card-info-section {
+    border: 1px solid black;
+    padding: 10px;
+}

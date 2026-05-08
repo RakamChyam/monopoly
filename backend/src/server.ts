@@ -11,10 +11,48 @@ import {
     PlayerMakeStepController
 } from "./infrastructure/socket-controllers/player-controllers/PlayerMakeStepController";
 import {PlayerEndTurnController} from "./infrastructure/socket-controllers/player-controllers/PlayerEndTurnController";
+import {
+    PlayerBuyPropertyController
+} from "./infrastructure/socket-controllers/player-controllers/PlayerBuyPropertyController";
+import {PlayerActionController} from "./infrastructure/socket-controllers/player-controllers/PlayerActionController";
+import {ConnectedPlayer} from "./infrastructure/model/ConnectedPlayer";
+import {ConnectedPlayerRepository} from "./infrastructure/repository/ConnectedPlayerRepository";
+import {ConnectPlayerController} from "./infrastructure/socket-controllers/data-controllers/ConnectPlayerController";
+import {PlayerBuyHouseController} from "./infrastructure/socket-controllers/field-controller/PlayerBuyHouseController";
+import {TradeOfferController} from "./infrastructure/socket-controllers/trade-controllers/TradeOfferController";
+import {GetTradeController} from "./infrastructure/socket-controllers/trade-controllers/GetTradeController";
+import {
+    PlayerSubmitTradeController
+} from "./infrastructure/socket-controllers/trade-controllers/PlayerSubmitTradeController";
+import {
+    PlayerCancelTradeController
+} from "./infrastructure/socket-controllers/trade-controllers/PlayerCancelTradeController";
+import {
+    PlayerSellHouseController
+} from "./infrastructure/socket-controllers/field-controller/PlayerSellHouseController";
+import {
+    PlayerPutCollateralController
+} from "./infrastructure/socket-controllers/field-controller/PlayerPutCollateralController";
+import {
+    PlayerReturnCollateralController
+} from "./infrastructure/socket-controllers/field-controller/playerReturnCollateralController";
+import {GetAuctionControllers} from "./infrastructure/socket-controllers/auction-controllers/GetAuctionControllers";
+import {
+    PlayerStartAuctionController
+} from "./infrastructure/socket-controllers/auction-controllers/PlayerStartAuctionController";
+import {
+    PlayerSubmitBidController
+} from "./infrastructure/socket-controllers/auction-controllers/PlayerSubmitBidController";
+import {
+    PlayerLeaveAuctionController
+} from "./infrastructure/socket-controllers/auction-controllers/PlayerLeaveAuctionController";
+import {
+    PlayerLoseGameController
+} from "./infrastructure/socket-controllers/player-controllers/PlayerLoseGameController";
 
 const app = express();
 const httpServer = createServer(app);
-const game = Game.getInstance();
+const game = Game.getInstance(3);
 
 app.use(cors({
     origin: "http://localhost:3000",
@@ -28,19 +66,28 @@ const io = new Server(httpServer, {
         credentials: true
     }
 });
-const notificationSystem = new NotificationSystem(io);
+
+const connectedPlayersRepo = new ConnectedPlayerRepository(game);
+const notificationSystem = new NotificationSystem(io, connectedPlayersRepo);
+
 
 app.use(express.json());
 
 io.on('connection', (socket) => {
     console.log("Socket connection connected");
+    console.log("Новое подлючение: " + socket.id);
+
+    const connectPlayerController = new ConnectPlayerController(game, connectedPlayersRepo, io);
+    socket.on("player-connected", (data) => {
+        console.log("connected player");
+        connectPlayerController.execute(data.nickname, socket.id)
+    })
 
     const getPlayersDataController = new GetPlayersDataController(game);
     socket.on('get-players-data', (data, callback) => {
         console.log("Got players data")
         getPlayersDataController.execute(callback)
     })
-
 
     const playerMakeStepController = new PlayerMakeStepController(game, notificationSystem, io);
     socket.on('player-make-step', (data) => {
@@ -52,6 +99,96 @@ io.on('connection', (socket) => {
     socket.on('player-end-turn', (data) => {
         console.log(`Player ${data.nickname} end turn`)
         playerEndTurnController.execute(data)
+    })
+
+    const playerBuyPropertyController = new PlayerBuyPropertyController(game, notificationSystem, io);
+    socket.on('player-buy-property', (data) => {
+        console.log(`Player ${data.nickname} buy property`)
+        playerBuyPropertyController.execute(data);
+    })
+
+    const playerActionController = new PlayerActionController(game, notificationSystem, io);
+    socket.on('player-action', (data) => {
+        console.log(`Player ${data.nickname} action`)
+        playerActionController.execute(data);
+    })
+
+    const playerBuyHouseController = new PlayerBuyHouseController(game, notificationSystem, io);
+    socket.on('player-buy-house', (data) => {
+        console.log(`Player ${data.nickname} buy house`)
+        playerBuyHouseController.execute(data);
+    })
+
+    const playerSellHouseController = new PlayerSellHouseController(game, notificationSystem, io);
+    socket.on('player-sell-house', (data) => {
+        console.log(`Player ${data.nickname} sell-house`)
+        playerSellHouseController.execute(data);
+    })
+
+    const playerPutCollateralController = new PlayerPutCollateralController(game, notificationSystem, io);
+    socket.on('player-put-collateral', (data) => {
+        console.log(`Player ${data.nickname} put collateral`)
+        playerPutCollateralController.execute(data);
+    })
+
+    const playerReturnCollateralController = new PlayerReturnCollateralController(game, notificationSystem, io);
+    socket.on('player-return-collateral', (data) => {
+        console.log(`Player ${data.nickname} return-collateral`)
+        playerReturnCollateralController.execute(data);
+    })
+
+    const tradeOfferController = new TradeOfferController(game, notificationSystem, io);
+    socket.on('player-offer-trade', (data) => {
+        console.log(`Player ${data.nickname} offer trade`)
+        tradeOfferController.execute(data);
+    })
+
+    const getTradeController = new GetTradeController(game);
+    socket.on('get-trade', (data, callback) => {
+        console.log(`Get trade`)
+        getTradeController.execute(data.nickname, callback)
+    })
+
+    const playerSubmitTradeController = new PlayerSubmitTradeController(game, notificationSystem, io);
+    socket.on('player-submit-trade', (data) => {
+        console.log(`Player ${data.nickname} submit trade`)
+        playerSubmitTradeController.execute(data);
+    })
+
+    const playerCancelTradeController = new PlayerCancelTradeController(game, notificationSystem, io);
+    socket.on('player-cancel-trade', (data) => {
+        console.log(`Player ${data.nickname} cancel trade`)
+        playerCancelTradeController.execute(data);
+    })
+
+    const getAuctionController = new GetAuctionControllers(game)
+    socket.on("get-auction", (data, callback) => {
+        console.log(`Get auction`)
+        getAuctionController.execute(callback);
+    })
+
+    const playerStartAuctionController = new PlayerStartAuctionController(game, notificationSystem, io);
+    socket.on('player-start-auction', (data) => {
+        console.log(`Player ${data.nickname} start`)
+        playerStartAuctionController.execute(data);
+    })
+
+    const playerSubmitBid = new PlayerSubmitBidController(game, io, notificationSystem);
+    socket.on('player-submit-bid', (data) => {
+        console.log(`Player ${data.nickname} submit bid ${data.bid}`)
+        playerSubmitBid.execute(data);
+    })
+
+    const playerLeaveAuctionController = new PlayerLeaveAuctionController(game, notificationSystem, io);
+    socket.on('player-leave-auction', (data) => {
+        console.log(`Player ${data.nickname} leave`)
+        playerLeaveAuctionController.execute(data);
+    })
+
+    const playerLoseGameController = new PlayerLoseGameController(game, notificationSystem, io);
+    socket.on('player-lose-game', (data) => {
+        console.log(`Player ${data.nickname} lose`)
+        playerLoseGameController.execute(data);
     })
 })
 

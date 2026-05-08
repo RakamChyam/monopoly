@@ -1,0 +1,97 @@
+.auction-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.auction-player-active {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    border: 1px solid #4caf50;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+.auction-player-info {
+    flex: 1;
+}
+
+.auction-player-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.auction-player-active .auction-player-info h3 {
+    color: #2e7d32;
+}
+
+.auction-player-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(56, 142, 60, 0.1));
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid rgba(76, 175, 80, 0.3)
+}
+
+.auction-player-bid {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4caf50;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(56, 142, 60, 0.1));
+    padding: 6px 14px;
+    border-radius: 8px;
+    min-width: 70px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(76, 175, 80, 0.4);
+    transition: all 0.3s ease;
+}
+
+.auction-player-active .auction-player-bid {
+    border-color: #4caf50;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(56, 142, 60, 0.15));
+}
+
+/* Эффект при наведении */
+.auction-player:hover,
+.auction-player-active:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 1) 100%);
+}
+
+.auction-player-active:hover {
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.6), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для баланса с денежным символом */
+.auction-player-info p::before {
+    content: "💰 ";
+    font-size: 11px;
+}
+
+/* Стили для ставки с денежным символом */
+.auction-player-bid::before {
+    content: "💎 ";
+    font-size: 14px;
+}

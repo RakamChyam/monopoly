@@ -1,3 +1,6 @@
+import {OwnerField} from "./Field";
+import {PlayerActions} from "../enums/PlayerActions";
+
 export default class Player {
     private readonly _nickname: string;
     private _balance: number = 1000;
@@ -6,6 +9,9 @@ export default class Player {
     private _makingStep: boolean = false;
     private _makeRoll: boolean = false;
     private _cubes: number = 3;
+    private _ownerCards: OwnerField[] = [];
+    private _action: string = PlayerActions.Nothing;
+    private _inTrade: boolean = false;
 
     public constructor(nickname: string, color: string) {
         this._nickname = nickname;
@@ -28,6 +34,39 @@ export default class Player {
         } else {
             this.position = newPosition;
         }
+    }
+
+    public addOwnerField(ownerField: OwnerField) {
+        this.ownerCards.push(ownerField);
+        ownerField.owner = this.nickname;
+    }
+
+    public deleteOwnerField(ownerField: OwnerField) {
+        const index = this.ownerCards.indexOf(ownerField);
+        if (index !== -1) {
+            this.ownerCards.splice(index, 1);
+        }
+    }
+
+    public getLastProperty() {
+        return this.ownerCards[this.ownerCards.length - 1];
+    }
+
+    public setPositionByCircle(newPosition: number) {
+        if (this.position > newPosition) {
+            this.position = newPosition;
+            this.balance += 200;
+        } else {
+            this.position = newPosition;
+        }
+    }
+
+    public getOwnerCard(field: OwnerField) {
+        return this.ownerCards.find(c => c.name === field.name && c.position === field.position);
+    }
+
+    get ownerCards(): OwnerField[] {
+        return this._ownerCards;
     }
 
     get nickname(): string {
@@ -56,6 +95,23 @@ export default class Player {
 
     get cubes(): number {
         return this._cubes;
+    }
+
+    get action(): string {
+        return this._action;
+    }
+
+
+    get inTrade(): boolean {
+        return this._inTrade;
+    }
+
+    set inTrade(value: boolean) {
+        this._inTrade = value;
+    }
+
+    set action(value: string) {
+        this._action = value;
     }
 
     set cubes(value: number) {

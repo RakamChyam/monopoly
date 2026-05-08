@@ -13,7 +13,7 @@ export class LoginPlayerUseCase {
             throw new Error(`Игрок с ником ${nickname} уже есть`)
         }
 
-        if (!this.game.hasColor(nickname)) {
+        if (!this.game.hasColor(color)) {
             throw new Error(`Этот цвет недоступен`)
         }
 
