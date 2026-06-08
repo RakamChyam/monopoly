@@ -12,6 +12,8 @@ export default class Player {
     private _ownerCards: OwnerField[] = [];
     private _action: string = PlayerActions.Nothing;
     private _inTrade: boolean = false;
+    private _inPrison: boolean = false;
+    private _prisonYears: number = 0;
 
     public constructor(nickname: string, color: string) {
         this._nickname = nickname;
@@ -143,5 +145,25 @@ export default class Player {
 
     set makingStep(value: boolean) {
         this._makingStep = value;
+    }
+
+
+    get inPrison(): boolean {
+        return this._inPrison;
+    }
+
+    set inPrison(value: boolean) {
+        this._inPrison = value;
+    }
+
+    get prisonYears(): number {
+        return this._prisonYears;
+    }
+
+    set prisonYears(value: number) {
+        if (value < 0 || value > 3) {
+            throw new Error(`${value} is not a valid number`);
+        }
+        this._prisonYears = value;
     }
 }

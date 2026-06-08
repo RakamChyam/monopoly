@@ -106,7 +106,7 @@ export const fields: Field[] = [
         canBuy: false,
     },
     {
-        name: "Рижская железная дорога",
+        name: "Балтийская железная дорога",
         type: "railway",
         position: 5,
         price: 200,

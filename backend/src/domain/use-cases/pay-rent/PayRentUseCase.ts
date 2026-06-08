@@ -21,7 +21,7 @@ export class PayRentUseCase {
                     owner.balance += rent;
                 } else {
                     console.log(field)
-                    throw new GameError("Недостаточно средств", player);
+                    throw new GameError(`Недостаточно средств. Рента: ${rent}`, player);
                 }
             } else {
                 throw new Error("Игрок не найден")
@@ -73,7 +73,7 @@ export class PayRentUseCase {
                     railwayCount++;
                 }
             }
-            rent = player.cubes * field.rent[railwayCount - 1]
+            rent = field.rent[railwayCount - 1]
             return rent;
         }
 

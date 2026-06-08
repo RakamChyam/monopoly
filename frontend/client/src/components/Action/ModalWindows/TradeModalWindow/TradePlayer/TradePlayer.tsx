@@ -8,6 +8,9 @@ interface TradePlayerProps {
 }
 
 export default function TradePlayer(props: TradePlayerProps) {
+    if(props.player.inTrade) {
+        return null;
+    }
     return (
         <div className={"trade-player-list-element"} onClick={props.onSelect}>
             <div

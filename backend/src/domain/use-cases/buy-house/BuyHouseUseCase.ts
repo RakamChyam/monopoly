@@ -64,6 +64,12 @@ export class BuyHouseUseCase {
             }
         });
 
+        for (const cardWithCardType of cardsWithCardType) {
+            if (cardWithCardType.collateral) {
+                throw new GameError("Нельзя построить дом, пока одна из территорий в залоге", player);
+            }
+        }
+
         player.balance -= gameField.houseCost;
         gameField.houses += 1;
 

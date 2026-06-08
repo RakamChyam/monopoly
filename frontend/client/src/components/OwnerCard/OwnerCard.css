@@ -6,6 +6,12 @@
     height: 320px;
 }
 
+.owner-card-item-collateral {
+    border: 3px #ff0000 solid;
+    width: 200px;
+    height: 320px;
+}
+
 .owner-card-color {
     display: flex;
     flex-direction: row-reverse;
@@ -81,6 +87,22 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.owner-card-btn {
+    border-radius: 20px; /* Ваша базовая строка */
+}
+
+/* Эффект при наведении */
+.owner-card-btn:hover {
+    transform: translateY(-1px); /* Легкий подъем вверх */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Эффект при клике */
+.owner-card-btn:active {
+    transform: translateY(1px); /* Кнопка прожимается */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Кастомный скроллбар */

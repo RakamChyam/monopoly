@@ -16,6 +16,9 @@ export class PlayerMapper {
             makeRoll: player.makeRoll,
             ownerCards: this.sortOwnerCards(player.ownerCards),
             action: player.action,
+            inPrison: player.inPrison,
+            prisonYears: player.prisonYears,
+            inTrade: player.inTrade,
         };
     }
 

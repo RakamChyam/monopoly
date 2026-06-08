@@ -60,6 +60,9 @@ export class Auction {
         return this._step;
     }
 
+    set step(value: number) {
+        this._step = value;
+    }
 
     get isEnd(): boolean {
         return this._isEnd;

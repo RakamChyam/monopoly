@@ -85,7 +85,7 @@ export default function OwnerCard({field, player}: OwnerCardProps) {
     if (isPropertyCard(field)) {
         const propertyField = field as PropertyField;
         return (
-            <div className="owner-card-item">
+            <div className= {field.collateral ? "owner-card-item-collateral" : "owner-card-item" }>
                 <div
                     className="owner-card-color"
                     style={{backgroundColor: propertyField.color}}

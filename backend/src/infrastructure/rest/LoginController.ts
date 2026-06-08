@@ -6,6 +6,7 @@ import {NotificationSystem} from "../notifications/NotificationSystem";
 import {StartGameUseCase} from "../../domain/use-cases/login-player/StartGameUseCase";
 import {Server} from "socket.io";
 import {PlayerMapper} from "../../applications/mappers/player-mappers/PlayerMapper";
+import {ConnectedPlayer} from "../model/ConnectedPlayer";
 
 
 export class LoginController {
@@ -32,6 +33,13 @@ export class LoginController {
 
             if (result.isValid) {
                 const newPlayer = this.loginPlayerUseCase.execute(nickname, color)
+                const newPlayerId = `${newPlayer.nickname}_${Date.now()}`
+
+
+                res.cookie("playerId", newPlayerId, {
+                    httpOnly: true,
+                    maxAge: 365 * 24 * 60 * 60 * 1000,
+                });
 
                 res.status(200).send({
                     nickname: newPlayer.nickname,

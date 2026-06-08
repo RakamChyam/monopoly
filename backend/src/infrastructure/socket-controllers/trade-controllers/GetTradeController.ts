@@ -12,10 +12,9 @@ export class GetTradeController {
         try {
             const player = this.game.getPlayerByNickname(nickname);
             if (player) {
-                console.log(player);
                 const tradeOffer = this.game.getTradeOfferByPlayer(player);
                 if (tradeOffer) {
-                    const mappedTradeOffer = TradeOfferMapper.map(tradeOffer)
+                    const mappedTradeOffer = TradeOfferMapper.map(tradeOffer);
                     callback({
                         success: true,
                         tradeOffer: mappedTradeOffer,

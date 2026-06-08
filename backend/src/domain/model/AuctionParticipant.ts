@@ -1,7 +1,7 @@
 import Player from "./Player";
 
 export class AuctionParticipant {
-    private _player: Player;
+    private readonly _player: Player;
     private _makingBid: boolean = false;
     private _bid: number = 0;
 

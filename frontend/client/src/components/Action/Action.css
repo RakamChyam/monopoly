@@ -1,5 +1,4 @@
 .action-container {
-    border: 1px solid black;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -68,4 +67,10 @@
     position: relative;
     overflow: hidden;
     min-width: 177px;
+}
+
+.prison-info p{
+    color: #7f8c8d;
+    margin: 0;
+    font-size: 1.2rem;
 }

@@ -61,6 +61,7 @@
 /*Окно*/
 
 .modal-card {
+    position: relative;
     border: 3px black solid;
     color: black;
     width: 400px;

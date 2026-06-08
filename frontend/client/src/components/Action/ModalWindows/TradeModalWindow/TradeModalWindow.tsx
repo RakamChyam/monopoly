@@ -57,8 +57,6 @@ export default function TradeModalWindow(props: TradeModalWindowProps) {
                 };
 
                 setTradeOffer(result);
-
-                console.log(result);
             }
         }
         ,

@@ -20,7 +20,7 @@ export class ChanceUseCase {
         }
 
         const cubes = player.cubes;
-
+//не все прописаны
         switch (cubes) {
             case 3:
                 player.position = 39;

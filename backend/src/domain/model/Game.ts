@@ -105,10 +105,21 @@ export default class Game {
         }
     }
 
+    public getTradeOfferBySelectedPlayer(player: Player) {
+        return this._tradeOffers.find((tradeOffer) =>
+            player === tradeOffer.selectedPlayer.player
+        )
+    }
+
     public getTradeOfferByPlayer(player: Player) {
-        return this._tradeOffers.find((tradeOffer: TradeOffer) => {
-            return player === tradeOffer.selectedPlayer.player;
-        })
+        for (const tradeOffer of this._tradeOffers) {
+            if (player === tradeOffer.selectedPlayer.player) {
+                return tradeOffer
+            }
+            // } else if (player === tradeOffer.initiator.player) {
+            //     return tradeOffer
+            // }
+        }
     }
 
     public addAuction(auction: Auction): void {

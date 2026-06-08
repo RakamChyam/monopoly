@@ -36,8 +36,13 @@ export class PlayerMakeStepUseCase {
         player.cubes = cubes;
         player.makeRoll = true;
 
+        if (player.position === 30) {
+            player.position = 10;
+            player.inPrison = true;
+            player.prisonYears = 3;
+        }
+
         this.definePlayerAction(player);
-        console.log(player);
 
         return player;
     }

@@ -9,4 +9,7 @@ export default interface Player {
     makeRoll: boolean;
     ownerCards: Array<OwnerField>;
     action: string;
+    inPrison: boolean;
+    prisonYears: number;
+    inTrade: boolean;
 }

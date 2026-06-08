@@ -18,7 +18,19 @@ export class PlayerEndTurnUseCase {
             throw new Error(`Player ${nickname} can't end turn`);
         }
 
+        if (player.inPrison) {
+            if (player.prisonYears === 0) {
+                player.inPrison = false;
+            } else {
+                player.prisonYears -= 1;
+            }
+        }
+
         this.game.nextStep();
+
+        if (this.game.getCurrentPlayer().inPrison) {
+            this.game.getCurrentPlayer().makeRoll = true;
+        }
 
         return player;
     }

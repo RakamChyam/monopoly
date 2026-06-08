@@ -15,7 +15,6 @@ import {
     PlayerBuyPropertyController
 } from "./infrastructure/socket-controllers/player-controllers/PlayerBuyPropertyController";
 import {PlayerActionController} from "./infrastructure/socket-controllers/player-controllers/PlayerActionController";
-import {ConnectedPlayer} from "./infrastructure/model/ConnectedPlayer";
 import {ConnectedPlayerRepository} from "./infrastructure/repository/ConnectedPlayerRepository";
 import {ConnectPlayerController} from "./infrastructure/socket-controllers/data-controllers/ConnectPlayerController";
 import {PlayerBuyHouseController} from "./infrastructure/socket-controllers/field-controller/PlayerBuyHouseController";
@@ -49,55 +48,75 @@ import {
 import {
     PlayerLoseGameController
 } from "./infrastructure/socket-controllers/player-controllers/PlayerLoseGameController";
+import path from "node:path";
+import {PrisonBuyOutController} from "./infrastructure/socket-controllers/player-controllers/PrisonBuyOutController";
+import cookieParser from 'cookie-parser';
+import {GetMeController} from "./infrastructure/socket-controllers/data-controllers/GetMeController";
 
 const app = express();
 const httpServer = createServer(app);
-const game = Game.getInstance(3);
+const game = Game.getInstance(2);
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: 'http://localhost:3000',
         methods: ["GET", "POST"],
         credentials: true
     }
 });
 
-const connectedPlayersRepo = new ConnectedPlayerRepository(game);
+const connectedPlayersRepo = new ConnectedPlayerRepository();
 const notificationSystem = new NotificationSystem(io, connectedPlayersRepo);
 
 
+app.use(cookieParser())
+
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../../frontend/client/build')));
+app.use((req: Request, res: Response, next) => {
+    if (req.path.startsWith('/api') || req.path.includes('.')) {
+        return next();
+    }
+    res.sendFile(path.join(__dirname, '../../frontend/client/build', 'index.html'));
+});
 
 io.on('connection', (socket) => {
-    console.log("Socket connection connected");
-    console.log("Новое подлючение: " + socket.id);
-
     const connectPlayerController = new ConnectPlayerController(game, connectedPlayersRepo, io);
     socket.on("player-connected", (data) => {
-        console.log("connected player");
-        connectPlayerController.execute(data.nickname, socket.id)
+        const cookies = socket.handshake.headers.cookie;
+        if (cookies) {
+            connectPlayerController.execute(data.nickname, socket.id, cookies)
+        }
+    })
+
+    const getMeController = new GetMeController(connectedPlayersRepo);
+    socket.on('get-me', (data, callback) => {
+        console.log("get-me")
+        const cookies = socket.handshake.headers.cookie;
+        if (cookies) {
+            getMeController.execute(cookies, callback);
+        } else {
+            console.log("Нет куков")
+        }
     })
 
     const getPlayersDataController = new GetPlayersDataController(game);
     socket.on('get-players-data', (data, callback) => {
-        console.log("Got players data")
         getPlayersDataController.execute(callback)
     })
 
     const playerMakeStepController = new PlayerMakeStepController(game, notificationSystem, io);
     socket.on('player-make-step', (data) => {
-        console.log(`Player ${data.nickname} make step`)
         playerMakeStepController.execute(data)
     })
 
     const playerEndTurnController = new PlayerEndTurnController(game, notificationSystem, io);
     socket.on('player-end-turn', (data) => {
-        console.log(`Player ${data.nickname} end turn`)
         playerEndTurnController.execute(data)
     })
 
@@ -190,21 +209,25 @@ io.on('connection', (socket) => {
         console.log(`Player ${data.nickname} lose`)
         playerLoseGameController.execute(data);
     })
+
+    const prisonBuyOutController = new PrisonBuyOutController(game, notificationSystem, io);
+    socket.on('prison-buy-out', (data) => {
+        console.log(`Prison buy out`)
+        prisonBuyOutController.execute(data);
+    })
 })
+
 
 const getColorController = new GetColorsController(game);
 app.get('/api/colors', (req: Request, res: Response) => {
-    console.log("API COLORS")
     getColorController.execute(req, res);
 })
 
 
 const loginController = new LoginController(game, notificationSystem, io);
 app.post('/api/login', (req: Request, res: Response) => {
-    console.log("API LOGIN")
     loginController.execute(req, res);
 })
-
 
 const PORT = 5000;
 httpServer.listen(PORT, () => {

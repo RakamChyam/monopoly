@@ -12,6 +12,7 @@ export class EndAuctionUseCase {
         const winner = auction.getCurrentParticipant();
 
         winner.player.addOwnerField(auction.card)
+        auction.card.collateral = false
         auction.card.owner = winner.player.nickname;
         winner.player.balance -= winner.bid;
 

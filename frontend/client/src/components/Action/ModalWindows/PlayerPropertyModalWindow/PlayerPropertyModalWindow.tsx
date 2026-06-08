@@ -18,7 +18,7 @@ export default function PlayerPropertyModalWindow(props: PlayerPropertyModalWind
         }}>
             <div className={"player-property-modal-window"} onClick={event => event.stopPropagation()}>
                 <div className={"player-property-modal-header"}>
-                    <h3>Мои территории ({props.player.ownerCards.length})</h3>
+                    <h2>Мои территории ({props.player.ownerCards.length})</h2>
                     <button
                         type="button"
                         className="modal-close"

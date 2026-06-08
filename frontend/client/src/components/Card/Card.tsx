@@ -4,6 +4,7 @@ import Player from "../../types/game-entites/Player";
 import {JSX, useState} from "react";
 import treasuryActions from "../../data/treasury";
 import chanceActions from "../../data/chance";
+import {createPortal} from "react-dom";
 
 interface CardProps {
     position: number;
@@ -235,7 +236,7 @@ export default function Card(props: CardProps) {
             >
                 {renderCardContent()}
             </div>
-            {showCardInfo && (
+            {showCardInfo && createPortal(
                 <div className="modal-overlay" onClick={() => setShowCardInfo(false)}>
                     <div className="modal-card" onClick={(e) => e.stopPropagation()}>
                         <div
@@ -247,7 +248,8 @@ export default function Card(props: CardProps) {
                             <div>{renderInfoByType(props.type)}</div>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );

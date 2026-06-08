@@ -3,6 +3,7 @@ import {ConnectedPlayerRepository} from "../../repository/ConnectedPlayerReposit
 import {ConnectedPlayer} from "../../model/ConnectedPlayer";
 import {Server} from "socket.io";
 import {PlayerMapper} from "../../../applications/mappers/player-mappers/PlayerMapper";
+import CookieManager from "../../application/CookieManager";
 
 export class ConnectPlayerController {
     private game: Game;
@@ -15,11 +16,12 @@ export class ConnectPlayerController {
         this.io = io;
     }
 
-    public execute(nickname: string, socketId: string): void {
+    public execute(nickname: string, socketId: string, cookies: string): void {
         try {
             const player = this.game.getPlayerByNickname(nickname);
-            if (player) {
-                const connectedPlayer = new ConnectedPlayer(player, socketId);
+            const id = CookieManager.parse(cookies).playerId;
+            if (player && id) {
+                const connectedPlayer = new ConnectedPlayer(player, socketId, id);
                 this.connectedPlayersRepo.addConnectedPlayer(connectedPlayer);
 
                 this.io.emit("update-players-data", {

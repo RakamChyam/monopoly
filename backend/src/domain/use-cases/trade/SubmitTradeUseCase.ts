@@ -9,7 +9,7 @@ export class SubmitTradeUseCase {
     }
 
     public execute(player: Player) {
-        const tradeOffer = this.game.getTradeOfferByPlayer(player);
+        const tradeOffer = this.game.getTradeOfferBySelectedPlayer(player);
 
         if (!tradeOffer) {
             throw new Error("Could not find trade offer");

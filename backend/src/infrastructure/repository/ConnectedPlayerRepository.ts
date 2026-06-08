@@ -1,14 +1,8 @@
-import Game from "../../domain/model/Game";
 import {ConnectedPlayer} from "../model/ConnectedPlayer";
 import Player from "../../domain/model/Player";
 
 export class ConnectedPlayerRepository {
-    private game: Game;
     private _connectedPlayers: ConnectedPlayer[] = [];
-
-    constructor(game: Game) {
-        this.game = game;
-    }
 
     public addConnectedPlayer(connectedPlayer: ConnectedPlayer) {
 
@@ -31,6 +25,10 @@ export class ConnectedPlayerRepository {
 
     public getConnectedPlayer(player: Player) {
         return this._connectedPlayers.find(CP => CP.player === player);
+    }
+
+    public getPlayerById(id: string) {
+        return this._connectedPlayers.find(CP => CP.playerId === id)?.player;
     }
 
     get connectedPlayers(): ConnectedPlayer[] {
