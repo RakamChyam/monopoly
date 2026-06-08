@@ -5,17 +5,17 @@
 1. Убедитесь, что у вас установлен node.js и npm
 
 2. После установки вводите в консоли следующее:
-   cd frontend/client   # переходим в папку с frontend
-   npm install          # установка зависимостей фронта
-   npm run build        # сборка React-приложения
+   cd frontend/client
+   npm install         
+   npm run build        
 
 3. Далее вводим следующее:
    cd ..
    cd ..
-   cd backend        # переходим в папку с сервером
-   npm install       # установка зависимостей сервера
-   npm run build     # сборка сервера
-   npm start         # запуск сервера
+   cd backend       
+   npm install       
+   npm run build    
+   npm start         
 
 4. Заходим в бразуер и вводим localhost:5000, если вы видите форму входа, то все получилось.
 
